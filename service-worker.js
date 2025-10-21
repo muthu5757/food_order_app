@@ -8,7 +8,7 @@ const urlsToCache = [
   'images/icon-192.png',
   'images/icon-512.png'
 ];
-
+navigator.serviceWorker.register('/food_order_app/service-worker.js');
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
