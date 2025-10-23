@@ -37,6 +37,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
+  function showOrderNotification() {
+  // Check if the Notification API is supported
+    if ("Notification" in window) {
+      // Request permission inside user action
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          new Notification("QuickEats 🍔", {
+            body: `Your order has been placed successfully! 🎉`,
+            icon: "images/icon-192x192.png"
+          });
+        } else {
+          console.log("Notification permission denied.");
+        }
+      });
+    } else {
+      console.log("This browser does not support notifications.");
+    }
+  }
+
   window.addToCart = (id) => {
     const item = foodItems.find(i => i.id === id);
     cart.push({ ...item, qty: 1 });
@@ -80,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('orderForm').addEventListener('submit', (e) => {
       e.preventDefault();
+      showOrderNotification();
       alert('Order placed successfully 🎉');
       let history = JSON.parse(localStorage.getItem('orders')) || [];
       history.push({ date: new Date().toLocaleString(), items: cart });
