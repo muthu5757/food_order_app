@@ -1,10 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
   const foodItems = [
-    { id: 1, name: 'Margherita Pizza', price: 199, cat: 'Pizza', img: 'images/food1.jpg' },
-    { id: 2, name: 'Cheese Burger', price: 149, cat: 'Burger', img: 'images/food1.jpg' },
-    { id: 3, name: 'Coca Cola', price: 49, cat: 'Drinks', img: 'images/food1.jpg' },
-    { id: 4, name: 'Chocolate Cake', price: 99, cat: 'Dessert', img: 'images/food1.jpg' }
-  ];
+  { id: 1, name: 'Margherita Pizza', price: 199, cat: 'Pizza', img: 'images/margheritapizza.jpg' },
+  { id: 2, name: 'Cheese Burst Pizza', price: 249, cat: 'Pizza', img: 'images/CheeseBurstPizza.jpg' },
+  { id: 3, name: 'Veggie Burger', price: 159, cat: 'Burger', img: 'images/vegb.jpg' },
+  { id: 4, name: 'Chicken Burger', price: 189, cat: 'Burger', img: 'images/chickbur.jpg' },
+  { id: 5, name: 'French Fries', price: 99, cat: 'Snacks', img: 'images/ff.jpg' },
+  { id: 6, name: 'Coca Cola', price: 49, cat: 'Drinks', img: 'images/cc.jpg' },
+  { id: 7, name: 'Cold Coffee', price: 89, cat: 'Drinks', img: 'images/ccof.jpg' },
+  { id: 8, name: 'Chocolate Cake', price: 119, cat: 'Dessert', img: 'images/chococ.jpg' },
+  { id: 9, name: 'Ice Cream Sundae', price: 99, cat: 'Dessert', img: 'images/ics.jpg' },
+  { id: 10, name: 'Pasta Alfredo', price: 179, cat: 'Pasta', img: 'images/pastap.jpg' },
+  { id: 11, name: 'Spicy Noodles', price: 129, cat: 'Chinese', img: 'images/sn.jpg' },
+  { id: 12, name: 'Tandoori Chicken', price: 249, cat: 'Indian', img: 'images/tc.jpg' },
+  { id: 13, name: 'Paneer Butter Masala', price: 199, cat: 'Indian', img: 'images/pbm.jpg' },
+  { id: 14, name: 'Mojito', price: 79, cat: 'Drinks', img: 'images/moj.jpg' },
+  { id: 15, name: 'Veg Sandwich', price: 99, cat: 'Snacks', img: 'images/vdgsand.jpg' },
+  { id: 16, name: 'Chicken Biryani', price: 229, cat: 'Indian', img: 'images/cb.jpg' }
+];
 
   const listEl = document.getElementById('food-list');
   const searchEl = document.getElementById('search');
@@ -21,20 +33,23 @@ document.addEventListener('DOMContentLoaded', () => {
     );
     listEl.innerHTML = filtered.map(item => {
       const inCart = cart.find(c => c.id === item.id);
-      return `<div class='bg-white rounded shadow p-2 text-center'>
-        <img src='${item.img}' class='w-full h-28 object-cover rounded'/>
-        <h3 class='font-semibold mt-2'>${item.name}</h3>
-        <p>₹${item.price}</p>
-        ${inCart ? 
-          `<div class='flex justify-center gap-2 mt-1'>
-             <button onclick='updateQty(${item.id},-1)' class='bg-orange-400 px-2 rounded text-white'>-</button>
-             <span>${inCart.qty}</span>
-             <button onclick='updateQty(${item.id},1)' class='bg-orange-400 px-2 rounded text-white'>+</button>
-           </div>`
-          :
-          `<button onclick='addToCart(${item.id})' class='bg-orange-500 text-white px-3 py-1 rounded mt-1'>Add to Cart</button>`}
-      </div>`;
-    }).join('');
+      return `<div class='bg-white rounded shadow p-5 text-center'>
+    <div class='overflow-hidden rounded h-48'>
+      <img src='${item.img}' class='w-full h-full object-cover'/>
+    </div>
+    <h3 class='font-semibold mt-2'>${item.name}</h3>
+    <p>₹${item.price}</p>
+    ${
+      inCart 
+      ? `<div class='flex justify-center gap-2 mt-1'>
+          <button onclick='updateQty(${item.id},-1)' class='bg-orange-400 px-2 rounded text-white'>-</button>
+          <span>${inCart.qty}</span>
+          <button onclick='updateQty(${item.id},1)' class='bg-orange-400 px-2 rounded text-white'>+</button>
+        </div>`
+      : `<button onclick='addToCart(${item.id})' class='bg-orange-500 text-white px-3 py-1 rounded mt-1'>Add to Cart</button>`
+    }
+  </div>`;
+}).join('');
   }
 
   function showOrderNotification() {
@@ -93,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>`
       ).join('');
       const total = cart.reduce((sum, c) => sum + c.price * c.qty, 0);
-      totalEl.textContent = 'Total: ₹' + total;
+      totalEl.textContent = 'Total: ₹' + total + ' (Cash On Delivery Only !)';
     }
     renderCart();
 
@@ -107,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cart = [];
       localStorage.removeItem('cart');
       renderCart();
+      location.href="index.html";
     });
   }
 
