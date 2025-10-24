@@ -97,6 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
     searchEl.addEventListener('input', displayItems);
   }
 
+   if ("Notification" in window) {
+    if (Notification.permission === "default") { // not granted or denied yet
+      Notification.requestPermission();
+    }
+  }
+
   // CART PAGE
   const cartEl = document.getElementById('cart-items');
   if (cartEl) {
@@ -122,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cart = [];
       localStorage.removeItem('cart');
       renderCart();
-      location.href="index.html";
     });
   }
 
